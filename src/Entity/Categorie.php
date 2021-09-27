@@ -30,7 +30,7 @@ class Categorie
     private $motscles;
 
     /**
-     * @ORM\OneToMany(targetEntity=Annonce::class, mappedBy="categorie")
+     * @ORM\OneToMany(targetEntity=Annonce::class, mappedBy="Categorie")
      */
     private $annonces;
 

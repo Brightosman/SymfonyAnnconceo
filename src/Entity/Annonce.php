@@ -55,7 +55,7 @@ class Annonce
     private $ville;
 
     /**
-     * @ORM\ManyToOne(targetEntity=categorie::class, inversedBy="annonces")
+     * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="annonces")
      */
     private $categorie;
 
@@ -65,7 +65,7 @@ class Annonce
     private $date_enregistrement;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="annonces")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="annonces")
      */
     private $user;
 

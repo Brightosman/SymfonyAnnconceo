@@ -94,10 +94,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $commentaires;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="user1")
+     */
+    private $notes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="user2")
+     */
+    private $notesRecues;
+
     public function __construct()
     {
         $this->annonces = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
+        $this->notes = new ArrayCollection();
+        $this->notesRecues = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -362,4 +374,64 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->nom;
 
     }
+
+     /**
+      * @return Collection|Note[]
+      */
+     public function getNotes(): Collection
+     {
+         return $this->notes;
+     }
+
+     public function addNote(Note $note): self
+     {
+         if (!$this->notes->contains($note)) {
+             $this->notes[] = $note;
+             $note->setUser1($this);
+         }
+
+         return $this;
+     }
+
+     public function removeNote(Note $note): self
+     {
+         if ($this->notes->removeElement($note)) {
+             // set the owning side to null (unless already changed)
+             if ($note->getUser1() === $this) {
+                 $note->setUser1(null);
+             }
+         }
+
+         return $this;
+     }
+
+     /**
+      * @return Collection|Note[]
+      */
+     public function getNotesRecues(): Collection
+     {
+         return $this->notesRecues;
+     }
+
+     public function addNotesRecue(Note $notesRecue): self
+     {
+         if (!$this->notesRecues->contains($notesRecue)) {
+             $this->notesRecues[] = $notesRecue;
+             $notesRecue->setUser2($this);
+         }
+
+         return $this;
+     }
+
+     public function removeNotesRecue(Note $notesRecue): self
+     {
+         if ($this->notesRecues->removeElement($notesRecue)) {
+             // set the owning side to null (unless already changed)
+             if ($notesRecue->getUser2() === $this) {
+                 $notesRecue->setUser2(null);
+             }
+         }
+
+         return $this;
+     }
 }

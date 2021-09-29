@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Annonce;
+use App\Entity\Media;
 use App\Form\AnnonceType;
 use App\Repository\AnnonceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,10 +30,37 @@ class AnnonceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $annonce->setDateEnregistrement(new \DateTimeImmutable('now'));
+            $user = $this->getUser();
+            $annonce->setUser($user);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($annonce);
             $entityManager->flush();
 
+            $mediaFile = $form->get('media')->getData();
+
+            if($mediaFile){
+                for ($i=0; $i < count($mediaFile); $i++){
+                    $media = new Media;
+
+                    $nomMedia = date("TmdHis") . "-" . uniqid() . "-" . $mediaFile[$i]->getClientOriginalName();
+
+                    $mediaFile[$i]->move(
+                        $this->getParameter("media_annonce"),
+                        $nomMedia
+                    );
+
+                    $media->setNom($nomMedia);
+                    $media->setAnnonce($annonce);
+                    $type = "image";
+                    $media->setType($type);
+
+                    $entityManager->persist($media);
+                    $entityManager->flush();
+                }
+            }
+            $this->addFlash("success", "L'annonce n°  a bien été ajoutée");
             return $this->redirectToRoute('annonce_index', [], Response::HTTP_SEE_OTHER);
         }
 

@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Form;
-
+use App\Entity\Media;
 use App\Entity\Annonce;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class AnnonceType extends AbstractType
 {
@@ -19,9 +21,13 @@ class AnnonceType extends AbstractType
             ->add('adresse')
             ->add('cp')
             ->add('ville')
-            ->add('date_enregistrement')
             ->add('categorie')
-            ->add('user')
+            ->add('media', FileType::class, [
+                "multiple" => true,
+                "mapped" => false,
+                "required" => false,
+
+            ])
         ;
     }
 

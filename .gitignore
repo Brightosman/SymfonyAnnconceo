@@ -25,3 +25,6 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+public/media/mediaUpload/CEST0929211610-6154bb7aa940b-caen.jpg
+public/media/mediaUpload/CEST0929211610-6154bb7aaadf9-montSaibtMichel.jpg
+public/media/mediaUpload/CEST0929211610-6154bb7aac25f-rouen.jpg

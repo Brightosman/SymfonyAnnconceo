@@ -55,6 +55,19 @@
             </div>
         </div>
 
+        <div>
+            
+			<h4>Commentaires</h4>
+			{% if annonce.commentaires %}
+			{% for commentaire in annonce.commentaires %}
+			<p>{{ commentaire.user.pseudo}} :-   {{ commentaire.commentaire }}</p>
+				
+			{% endfor %}
+			{% endif %}
+        </div>
+
+
+    <a href="{{ path('commentaire_new', {'id': annonce.id}) }}">Create new comment</a> 
 
     <a href="{{ path('annonce_index') }}">back to list</a>
 

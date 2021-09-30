@@ -18,12 +18,12 @@ class Commentaire
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="commentaires")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="commentaires")
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity=annonce::class, inversedBy="commentaires")
+     * @ORM\ManyToOne(targetEntity=Annonce::class, inversedBy="commentaires")
      */
     private $annonce;
 
@@ -92,6 +92,6 @@ class Commentaire
 
     public function __toString()
     {
-        return $this->nom;
+        return $this->id;
     }
 }
